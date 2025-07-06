@@ -6,26 +6,37 @@ This project demonstrates how I connected a Flask app and a MySQL database using
 
 ## 🔧 What I Did
 
-- Wrote a `Dockerfile` to containerize the Flask app
-- Used `requirements.txt` to install dependencies
-- Set up a **custom Docker network** so containers could talk
-- Ran a MySQL container manually
+- Wrote a `Dockerfile` to containerize the Flask app  
+- Used `requirements.txt` to install dependencies  
+- Set up a **custom Docker network** so containers could talk  
+- Ran a MySQL container manually  
 - Connected Flask to MySQL using `pymysql`
 
 ---
 
 ## 🐳 Commands I Used
 
+---
+
 ### 1️⃣ Build Flask Image
+
 ```bash
 docker build -t flask-app .
+```
 
-2️⃣ Create Docker Network
+---
 
+### 2️⃣ Create Docker Network
+
+```bash
 docker network create flask-net
+```
 
-3️⃣ Run MySQL Container
+---
 
+### 3️⃣ Run MySQL Container
+
+```bash
 docker run -d \
   --name mysql-db \
   --network flask-net \
@@ -34,20 +45,38 @@ docker run -d \
   -e MYSQL_USER=testuser \
   -e MYSQL_PASSWORD=testpass \
   mysql:5.7
+```
 
-4️⃣ Run Flask Container
+---
 
+### 4️⃣ Run Flask Container
+
+```bash
 docker run -d \
   --name flask-app \
   --network flask-net \
   -p 5000:5000 \
   flask-app
-
+```
 
 ---
 
-✅ Output
+## ✅ Output
 
-When visiting http://localhost:5000, you should see:
+When visiting `http://localhost:5000`, you should see:
 
-> ✅ Connected to MySQL from Flask!
+```
+✅ Connected to MySQL from Flask!
+```
+
+If there's an error, Flask will show the exact connection issue for debugging.
+
+---
+
+## 💡 Why This Was Valuable
+
+Doing everything manually helped me:
+
+- Understand how Docker networks work  
+- Get better with writing Dockerfiles  
+- Learn how containers communicate without Compose.
